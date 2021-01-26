@@ -9,8 +9,6 @@ const Header = ({ title }) => {
   );
 };
 
-export default Header;
-
 const styles = StyleSheet.create({
   header: {
     width: '100%',
@@ -26,3 +24,5 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
+
+export default Header;
