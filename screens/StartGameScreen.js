@@ -15,10 +15,33 @@ import Colors from '../constants/colors';
 
 const StartGameScreen = () => {
   const [inputValue, setInputValue] = useState('');
+  const [confirmed, setConfirmed] = useState(false);
+  const [selectedNumber, setSelectedNumber] = useState();
 
   const inputValueHandler = text => {
     setInputValue(text.replace(/[^0-9]/g, ''));
   };
+
+  const resetInputHandler = () => {
+    setInputValue('');
+    setConfirmed(false);
+  };
+
+  const confirmInputHandler = () => {
+    const chosenNumber = Number(inputValue);
+    if (chosenNumber === NaN || chosenNumber <= 0 || chosenNumber > 99) {
+      return;
+    }
+    setConfirmed(true);
+    setSelectedNumber(Number(inputValue));
+    setInputValue('');
+  };
+
+  let confirmedOutput;
+
+  if (confirmed) {
+    confirmedOutput = <Text>Chosen Number: {selectedNumber}</Text>;
+  }
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -40,7 +63,7 @@ const StartGameScreen = () => {
             <View style={styles.button}>
               <Button
                 title="Reset"
-                onPress={() => ({})}
+                onPress={resetInputHandler}
                 color={Colors.secondary}
               />
             </View>
@@ -49,10 +72,12 @@ const StartGameScreen = () => {
                 title="Confirm"
                 onPress={() => ({})}
                 color={Colors.primary}
+                onPress={confirmInputHandler}
               />
             </View>
           </View>
         </Card>
+        {confirmedOutput}
       </View>
     </TouchableWithoutFeedback>
   );
